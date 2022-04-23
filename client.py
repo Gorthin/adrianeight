@@ -14,7 +14,7 @@ BREAK = False
 client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 client_socket.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
 host_name = socket.gethostname()
-host_ip = '10.211.55.27'#  socket.gethostbyname(host_name)
+host_ip = '172.31.28.238'#  socket.gethostbyname(host_name)
 print(host_ip)
 port = 9699
 message = b'Hello'
