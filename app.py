@@ -11,5 +11,10 @@ def index():
 def xd():
     return render_template("xd.html")
 
+@app.route('/about_me')
+def about_me():
+    return render_template("about_me.html")
+
+
 if __name__=="__main__":
     app.run()
