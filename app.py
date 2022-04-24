@@ -32,7 +32,7 @@ def changeBlur(img,value):
 def pyshine_process(params):
 	print("Parameters:",params)
 	"""Video streaming generator function."""
-	CAMERA=False
+	CAMERA=True
 	if CAMERA:
 		cap = cv2.VideoCapture(0)
 	else:
@@ -95,5 +95,9 @@ def video_feed():
 	params= result
 	return Response(pyshine_process(params),mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/about_me')
+def about_me():
+    return render_template("about_me.html")
+
 if __name__ == "__main__":
-    app.run(debug=True,threaded=True)
+    app.run(debug=True, host='18.184.100.228',port=9999,threaded=True)
