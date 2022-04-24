@@ -1,79 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
 
-    <style>
-    	#video {
-    		transform: rotateY(180deg);
-    		-webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    		-moz-transform:rotateY(180deg); /* Firefox */
-    		
-    	}
-    </style>
-    
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.0/socket.io.js'></script>
-</head>
+<html>
+  <head>
+    <title>PyShine streaming video application </title>
+  </head>
+  <body>
 
-<body>
+  <h1>Please input the parameters (0 to 100): </h1>
 
-    <div id="container">
-    <video autoplay playsinline id="videoElement"></video>
-    <canvas id="canvas"  width="400" height="300"></canvas>
-    </div>
+<form action = "/res" method = "POST">
 
-    <div class = 'video'>
-        <img id="photo"  width="400"  height="300">
-        <h1>video</h1>
-    </div>
+  <table>
+    <tr>
+      <td align="right">Brightness:</td>
+      <td align="left"><input type="text" name="brightness" value="1" /></td>
+    </tr>
+    <tr>
+      <td align="right">Blur:</td>
+      <td align="left"><input type="text" name="blur" value="0" /></td>
+    </tr>
+   <tr>
+   <td></td>
+      <td align="right"><input type = "submit" value = "submit" /></td>
+    </tr>
 
-    <script type="text/javascript" charset="utf-8">
-      
-        var socket = io.connect(window.location.protocol + '//' + document.domain + ':' + location.port);
-        socket.on('connect', function(){
-            console.log("Connected...!", socket.connected)
-        });
+  </table>
+</form>
 
 
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        const video = document.querySelector("#videoElement");
-
-        video.width = 400;
-        video.height = 300; 
-    
-
-        if (navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(function (err0r) {
-
-            });
-        }
-
-        const FPS = 6;
-        setInterval(() => {
-            width=video.width;
-            height=video.height;
-            context.drawImage(video, 0, 0, width , height );
-            var data = canvas.toDataURL('image/jpeg', 0.5);
-            context.clearRect(0, 0, width,height );
-            socket.emit('image', data);
-        }, 1000/FPS);
-
-        socket.on('response_back', function(image){
-                photo.setAttribute('src', image );
-                
-        });
-
-    </script>
-
-
- </body>
+  </body>
 
 </html>
