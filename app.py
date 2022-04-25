@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request,Response
 import cv2,imutils,time
 import pyshine as ps
+import logging
+
 app = Flask(__name__)
 @app.route('/')
 def index():
@@ -30,6 +32,7 @@ def changeBlur(img,value):
 	return img
 
 def pyshine_process(params):
+	logging.info("pyshine process")
 	print("Parameters:",params)
 	"""Video streaming generator function."""
 	CAMERA=True
@@ -84,10 +87,13 @@ def pyshine_process(params):
 
 @app.route('/res',methods = ['POST','GET'])
 def res():
+	logging.info("pyshine process")
 	global result
+	result = ""
 	if request.method == 'POST':
 		result = request.form.to_dict()
-		return render_template("results.html",result = result)
+	return render_template("results.html",result = result)
+	
 
 @app.route('/results')
 def video_feed():
@@ -100,4 +106,4 @@ def about_me():
     return render_template("about_me.html")
 
 if __name__ == "__main__":
-    app.run(debug=True, host='18.184.100.228',port=9999,threaded=True)
+    app.run(debug=True, threaded=True)
